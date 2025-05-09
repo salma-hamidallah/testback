@@ -1,0 +1,6 @@
+ma\altix\dockerspring\entities\Task.class
+ma\altix\dockerspring\controllers\HomeController.class
+ma\altix\dockerspring\DockerSpringApplication.class
+ma\altix\dockerspring\controllers\TaskController.class
+ma\altix\dockerspring\services\TaskService.class
+ma\altix\dockerspring\repos\TaskRepository.class

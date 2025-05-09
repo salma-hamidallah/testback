@@ -1,0 +1,39 @@
+package ma.altix.dockerspring.controllers;
+
+import ma.altix.dockerspring.entities.Task;
+import ma.altix.dockerspring.services.TaskService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+@CrossOrigin(origins = "http://localhost:8088")
+@RestController // Utilisation de @RestController au lieu de @Controller pour retourner automatiquement des réponses JSON
+@RequestMapping("/tasks")
+public class TaskController {
+    private final TaskService taskService;
+
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
+    // Retourner la liste des tâches en JSON
+    @GetMapping
+    public ResponseEntity<List<Task>> listTasks() {
+        List<Task> tasks = taskService.findAll();
+        return ResponseEntity.ok(tasks);
+    }
+
+    // Créer une nouvelle tâche, attendre un JSON, et retourner la tâche créée en JSON
+    @PostMapping
+    public ResponseEntity<Task> saveTask(@RequestBody Task task) {
+        Task savedTask = taskService.save(task);
+        return ResponseEntity.ok(savedTask); // Retourne la tâche enregistrée en JSON
+    }
+
+    // Supprimer une tâche et retourner un statut HTTP 204 (no content) si la suppression est réussie
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+        taskService.deleteById(id);
+        return ResponseEntity.noContent().build(); // Retourne un status 204 No Content après suppression
+    }
+}
